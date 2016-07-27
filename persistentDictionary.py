@@ -1,5 +1,7 @@
 #This library is used to allow for persistent use of dictionaries
 import json
+import os
+
 
 def inFile(text):
 	#returns if a string is in a file
@@ -32,16 +34,19 @@ def readJson(datFile,key,upperKey=None):
 	 	return False
 
 def appendJson(datFile,key,value,upperKey=None):
-	with open(datFile) as data_file:
-		data = json.load(data_file)
-		if upperKey==None:
-			if not data.has_key(key):
-				data[key] = value
-		else:
-			if not data[upperKey].has_key(key):
-				data[upperKey][key]=value
-	with open(datFile,'w') as outfile:
-		json.dump(data, outfile,sort_keys=True)
+	if os.path.isfile('./'+datFile): 
+		with open(datFile) as data_file:
+			data = json.load(data_file)
+			if upperKey==None:
+				if not data.has_key(key):
+					data[key] = value
+			else:
+				if not data[upperKey].has_key(key):
+					data[upperKey][key]=value
+		with open(datFile,'w') as outfile:
+			json.dump(data, outfile,sort_keys=True)
+	else:
+		open(datFile,'w').write("{}")
 
 def deleteJson(datFile,key,upperKey=None):
 	with open(datFile) as data_file:
