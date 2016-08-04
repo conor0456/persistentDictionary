@@ -71,16 +71,17 @@ def replaceJson(datFile,key,value,upperKey=None):
 	with open(datFile,'w') as outfile:
 		json.dump(data, outfile)
 
-def jsonifyDictionary(dictionary,datFile):
+#Create 
+def storeDictionary(dictionary,datFile):
 	for i in range(0,len(dictionary)):
 		appendJson(datFile,dictionary.keys()[i],dictionary.values()[i])
 
-def makeDictionary(datFile):
+#Create dictionary from json file
+def createDictionary(datFile):
 	dictionary={}
 	with open(datFile) as data_file:
 		data = json.load(data_file)
 	for i in data.keys():
-		#print data
 		dictionary[i]=data[i]
 	return dictionary
 
